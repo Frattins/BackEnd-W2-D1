@@ -1,0 +1,54 @@
+﻿@{
+    var menuItems = (IEnumerable<BackEnd_W2_D1.Models.MenuItems>)ViewBag.MenuItems;
+    var selectedItems = (IEnumerable<BackEnd_W2_D1.Models.MenuItems>)ViewBag.SelectedItems;
+    var total = (decimal)ViewBag.Total;
+}
+
+<h1>Menu</h1>
+<table>
+    <tr>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var item in menuItems)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>€ @item.Price</td>
+            <td>
+                <form asp-action="AddItem" method="post">
+                    <input type="hidden" name="id" value="@item.Id" />
+                    <button type="submit">Add to Order</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+<h2>Selected Items</h2>
+<table>
+    <tr>
+        <th>Item</th>
+        <th>Price</th>
+    </tr>
+    @foreach (var item in selectedItems)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>€ @item.Price</td>
+        </tr>
+    }
+    <tr>
+        <td>Service Fee</td>
+        <td>€ 3.00</td>
+    </tr>
+    <tr>
+        <th>Total</th>
+        <th>€ @total</th>
+    </tr>
+</table>
+
+<form asp-action="ClearOrder" method="post">
+    <button type="submit">Clear Order</button>
+</form>
